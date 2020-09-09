@@ -1,27 +1,26 @@
 // @flow
 
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import { translate } from '../../../base/i18n';
-import { IconMessage } from '../../../base/icons';
-import { connect } from '../../../base/redux';
+import { translate } from "../../../base/i18n";
+import { IconMessage } from "../../../base/icons";
+import { connect } from "../../../base/redux";
 import {
     _mapDispatchToProps,
     _mapStateToProps as _abstractMapStateToProps,
-    type Props as AbstractProps
-} from '../../../chat/components/PrivateMessageButton';
-import { isButtonEnabled } from '../../../toolbox/functions.web';
+    type Props as AbstractProps,
+} from "../../../chat/components/PrivateMessageButton";
+import { isButtonEnabled } from "../../../toolbox/functions.web";
 
-import RemoteVideoMenuButton from './RemoteVideoMenuButton';
+import RemoteVideoMenuButton from "./RemoteVideoMenuButton";
 
 declare var interfaceConfig: Object;
 
 type Props = AbstractProps & {
-
     /**
      * True if the private chat functionality is disabled, hence the button is not visible.
      */
-    _hidden: boolean
+    _hidden: boolean,
 };
 
 /**
@@ -55,13 +54,15 @@ class PrivateMessageMenuButton extends Component<Props> {
             return null;
         }
 
-        return (
-            <RemoteVideoMenuButton
-                buttonText = { t('toolbar.privateMessage') }
-                icon = { IconMessage }
-                id = { `privmsglink_${participantID}` }
-                onClick = { this._onClick } />
-        );
+        return null;
+
+        // return (
+        //     <RemoteVideoMenuButton
+        //         buttonText = { t('toolbar.privateMessage') }
+        //         icon = { IconMessage }
+        //         id = { `privmsglink_${participantID}` }
+        //         onClick = { this._onClick } />
+        // );
     }
 
     _onClick: () => void;
@@ -88,9 +89,13 @@ class PrivateMessageMenuButton extends Component<Props> {
 function _mapStateToProps(state: Object, ownProps: Props): $Shape<Props> {
     return {
         ..._abstractMapStateToProps(state, ownProps),
-        _hidden: typeof interfaceConfig !== 'undefined'
-            && (interfaceConfig.DISABLE_PRIVATE_MESSAGES || !isButtonEnabled('chat'))
+        _hidden:
+            typeof interfaceConfig !== "undefined" &&
+            (interfaceConfig.DISABLE_PRIVATE_MESSAGES ||
+                !isButtonEnabled("chat")),
     };
 }
 
-export default translate(connect(_mapStateToProps, _mapDispatchToProps)(PrivateMessageMenuButton));
+export default translate(
+    connect(_mapStateToProps, _mapDispatchToProps)(PrivateMessageMenuButton)
+);

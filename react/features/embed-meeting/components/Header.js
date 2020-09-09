@@ -1,12 +1,11 @@
 // @flow
 
-import React from 'react';
+import React from "react";
 
-import { translate } from '../../base/i18n';
-import { Icon, IconClose } from '../../base/icons';
+import { translate } from "../../base/i18n";
+import { Icon, IconClose } from "../../base/icons";
 
 type Props = {
-
     /**
      * The {@link ModalDialog} closing function.
      */
@@ -15,7 +14,7 @@ type Props = {
     /**
      * Invoked to obtain translated strings.
      */
-    t: Function
+    t: Function,
 };
 
 /**
@@ -24,15 +23,16 @@ type Props = {
  * @returns {React$Element<any>}
  */
 function Header({ onClose, t }: Props) {
-    return (
-        <div
-            className = 'embed-meeting-dialog-header'>
-            { t('embedMeeting.title') }
-            <Icon
-                onClick = { onClose }
-                src = { IconClose } />
-        </div>
-    );
+    // return (
+    //     <div
+    //         className = 'embed-meeting-dialog-header'>
+    //         { t('embedMeeting.title') }
+    //         <Icon
+    //             onClick = { onClose }
+    //             src = { IconClose } />
+    //     </div>
+    // );
+    return null;
 }
 
 export default translate(Header);

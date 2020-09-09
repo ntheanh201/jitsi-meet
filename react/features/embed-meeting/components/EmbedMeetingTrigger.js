@@ -1,15 +1,14 @@
 // @flow
 
-import React from 'react';
-import { connect } from 'react-redux';
+import React from "react";
+import { connect } from "react-redux";
 
-import { openDialog } from '../../base/dialog';
-import { translate } from '../../base/i18n';
+import { openDialog } from "../../base/dialog";
+import { translate } from "../../base/i18n";
 
-import EmbedMeetingDialog from './EmbedMeetingDialog';
+import EmbedMeetingDialog from "./EmbedMeetingDialog";
 
 type Props = {
-
     /**
      * Open the embed meeting dialog
      */
@@ -36,15 +35,18 @@ function EmbedMeetingTrigger({ t, openEmbedDialog }: Props) {
         openEmbedDialog(EmbedMeetingDialog);
     }
 
-    return (
-        <div
-            className = 'embed-meeting-trigger'
-            onClick = { onClick }>
-            {t('embedMeeting.title')}
-        </div>
-    );
+    // return (
+    //     <div
+    //         className = 'embed-meeting-trigger'
+    //         onClick = { onClick }>
+    //         {t('embedMeeting.title')}
+    //     </div>
+    // );
+    return null;
 }
 
 const mapDispatchToProps = { openEmbedDialog: openDialog };
 
-export default translate(connect(null, mapDispatchToProps)(EmbedMeetingTrigger));
+export default translate(
+    connect(null, mapDispatchToProps)(EmbedMeetingTrigger)
+);

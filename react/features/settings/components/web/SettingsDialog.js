@@ -1,23 +1,23 @@
 // @flow
 
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import { getAvailableDevices } from '../../../base/devices';
-import { DialogWithTabs, hideDialog } from '../../../base/dialog';
-import { connect } from '../../../base/redux';
-import { isCalendarEnabled } from '../../../calendar-sync';
+import { getAvailableDevices } from "../../../base/devices";
+import { DialogWithTabs, hideDialog } from "../../../base/dialog";
+import { connect } from "../../../base/redux";
+import { isCalendarEnabled } from "../../../calendar-sync";
 import {
     DeviceSelection,
     getDeviceSelectionDialogProps,
-    submitDeviceSelectionTab
-} from '../../../device-selection';
-import { submitMoreTab, submitProfileTab } from '../../actions';
-import { SETTINGS_TABS } from '../../constants';
-import { getMoreTabProps, getProfileTabProps } from '../../functions';
+    submitDeviceSelectionTab,
+} from "../../../device-selection";
+import { submitMoreTab, submitProfileTab } from "../../actions";
+import { SETTINGS_TABS } from "../../constants";
+import { getMoreTabProps, getProfileTabProps } from "../../functions";
 
-import CalendarTab from './CalendarTab';
-import MoreTab from './MoreTab';
-import ProfileTab from './ProfileTab';
+import CalendarTab from "./CalendarTab";
+import MoreTab from "./MoreTab";
+import ProfileTab from "./ProfileTab";
 
 declare var APP: Object;
 declare var interfaceConfig: Object;
@@ -27,7 +27,6 @@ declare var interfaceConfig: Object;
  * {@link ConnectedSettingsDialog}.
  */
 type Props = {
-
     /**
      * Which settings tab should be initially displayed. If not defined then
      * the first tab will be displayed.
@@ -42,7 +41,7 @@ type Props = {
     /**
      * Invoked to save changed settings.
      */
-    dispatch: Function
+    dispatch: Function,
 };
 
 /**
@@ -75,29 +74,29 @@ class SettingsDialog extends Component<Props> {
     render() {
         const { _tabs, defaultTab, dispatch } = this.props;
         const onSubmit = this._closeDialog;
-        const defaultTabIdx
-            = _tabs.findIndex(({ name }) => name === defaultTab);
-        const tabs = _tabs.map(tab => {
+        const defaultTabIdx = _tabs.findIndex(
+            ({ name }) => name === defaultTab
+        );
+        const tabs = _tabs.map((tab) => {
             return {
                 ...tab,
                 onMount: tab.onMount
                     ? (...args) => dispatch(tab.onMount(...args))
                     : undefined,
-                submit: (...args) => tab.submit
-                    && dispatch(tab.submit(...args))
+                submit: (...args) =>
+                    tab.submit && dispatch(tab.submit(...args)),
             };
         });
 
         return (
             <DialogWithTabs
-                closeDialog = { this._closeDialog }
-                cssClassName = 'settings-dialog'
-                defaultTab = {
-                    defaultTabIdx === -1 ? undefined : defaultTabIdx
-                }
-                onSubmit = { onSubmit }
-                tabs = { tabs }
-                titleKey = 'settings.title' />
+                closeDialog={this._closeDialog}
+                cssClassName="settings-dialog"
+                defaultTab={defaultTabIdx === -1 ? undefined : defaultTabIdx}
+                onSubmit={onSubmit}
+                tabs={tabs}
+                titleKey="settings.title"
+            />
         );
     }
 
@@ -126,23 +125,27 @@ class SettingsDialog extends Component<Props> {
  */
 function _mapStateToProps(state) {
     const configuredTabs = interfaceConfig.SETTINGS_SECTIONS || [];
-    const jwt = state['features/base/jwt'];
+    const jwt = state["features/base/jwt"];
 
     // The settings sections to display.
-    const showDeviceSettings = configuredTabs.includes('devices');
+    const showDeviceSettings = configuredTabs.includes("devices");
     const moreTabProps = getMoreTabProps(state);
-    const { showModeratorSettings, showLanguageSettings, showPrejoinSettings } = moreTabProps;
-    const showProfileSettings
-        = configuredTabs.includes('profile') && jwt.isGuest;
-    const showCalendarSettings
-        = configuredTabs.includes('calendar') && isCalendarEnabled(state);
+    const {
+        showModeratorSettings,
+        showLanguageSettings,
+        showPrejoinSettings,
+    } = moreTabProps;
+    const showProfileSettings =
+        configuredTabs.includes("profile") && jwt.isGuest;
+    const showCalendarSettings =
+        configuredTabs.includes("calendar") && isCalendarEnabled(state);
     const tabs = [];
 
     if (showDeviceSettings) {
         tabs.push({
             name: SETTINGS_TABS.DEVICES,
             component: DeviceSelection,
-            label: 'settings.devices',
+            label: "settings.devices",
             onMount: getAvailableDevices,
             props: getDeviceSelectionDialogProps(state),
             propsUpdateFunction: (tabState, newProps) => {
@@ -156,31 +159,31 @@ function _mapStateToProps(state) {
                     ...newProps,
                     selectedAudioInputId: tabState.selectedAudioInputId,
                     selectedAudioOutputId: tabState.selectedAudioOutputId,
-                    selectedVideoInputId: tabState.selectedVideoInputId
+                    selectedVideoInputId: tabState.selectedVideoInputId,
                 };
             },
-            styles: 'settings-pane devices-pane',
-            submit: submitDeviceSelectionTab
+            styles: "settings-pane devices-pane",
+            submit: submitDeviceSelectionTab,
         });
     }
 
-    if (showProfileSettings) {
-        tabs.push({
-            name: SETTINGS_TABS.PROFILE,
-            component: ProfileTab,
-            label: 'profile.title',
-            props: getProfileTabProps(state),
-            styles: 'settings-pane profile-pane',
-            submit: submitProfileTab
-        });
-    }
+    // if (showProfileSettings) {
+    //     tabs.push({
+    //         name: SETTINGS_TABS.PROFILE,
+    //         component: ProfileTab,
+    //         label: 'profile.title',
+    //         props: getProfileTabProps(state),
+    //         styles: 'settings-pane profile-pane',
+    //         submit: submitProfileTab
+    //     });
+    // }
 
     if (showCalendarSettings) {
         tabs.push({
             name: SETTINGS_TABS.CALENDAR,
             component: CalendarTab,
-            label: 'settings.calendar.title',
-            styles: 'settings-pane calendar-pane'
+            label: "settings.calendar.title",
+            styles: "settings-pane calendar-pane",
         });
     }
 
@@ -188,7 +191,7 @@ function _mapStateToProps(state) {
         tabs.push({
             name: SETTINGS_TABS.MORE,
             component: MoreTab,
-            label: 'settings.more',
+            label: "settings.more",
             props: moreTabProps,
             propsUpdateFunction: (tabState, newProps) => {
                 // Updates tab props, keeping users selection
@@ -199,11 +202,11 @@ function _mapStateToProps(state) {
                     followMeEnabled: tabState.followMeEnabled,
                     showPrejoinPage: tabState.showPrejoinPage,
                     startAudioMuted: tabState.startAudioMuted,
-                    startVideoMuted: tabState.startVideoMuted
+                    startVideoMuted: tabState.startVideoMuted,
                 };
             },
-            styles: 'settings-pane more-pane',
-            submit: submitMoreTab
+            styles: "settings-pane more-pane",
+            submit: submitMoreTab,
         });
     }
 
