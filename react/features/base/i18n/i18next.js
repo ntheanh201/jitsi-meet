@@ -1,10 +1,10 @@
 // @flow
 
-import COUNTRIES_RESOURCES from "i18n-iso-countries/langs/en.json";
+import COUNTRIES_RESOURCES from "i18n-iso-countries/langs/de.json";
 import i18next from "i18next";
 import I18nextXHRBackend from "i18next-xhr-backend";
 
-import LANGUAGES_RESOURCES from "../../../../lang/languages.json";
+import LANGUAGES_RESOURCES from "../../../../lang/languages-de.json";
 import MAIN_RESOURCES from "../../../../lang/main.json";
 
 import languageDetector from "./languageDetector";
@@ -18,7 +18,6 @@ import languageDetector from "./languageDetector";
  * @type {Array<string>}
  */
 export const LANGUAGES: Array<string> = Object.keys(LANGUAGES_RESOURCES);
-
 /**
  * The default language.
  *
@@ -27,7 +26,7 @@ export const LANGUAGES: Array<string> = Object.keys(LANGUAGES_RESOURCES);
  * @public
  * @type {string} The default language.
  */
-export const DEFAULT_LANGUAGE = LANGUAGES[7];
+export const DEFAULT_LANGUAGE = LANGUAGES[0];
 
 /**
  * The options to initialize i18next with.
@@ -40,6 +39,7 @@ const options = {
     },
     defaultNS: "main",
     fallbackLng: DEFAULT_LANGUAGE,
+    // fallbackLng: "de",
     interpolation: {
         escapeValue: false, // not needed for react as it escapes by default
     },
@@ -60,6 +60,7 @@ i18next
     .use(navigator.product === "ReactNative" ? {} : I18nextXHRBackend)
     .use(languageDetector)
     .init(options);
+i18next.changeLanguage(localStorage?.getItem("language") || "de");
 
 // Add default language which is preloaded from the source code.
 i18next.addResourceBundle(
@@ -89,5 +90,4 @@ i18next.addResourceBundle(
 // import, but imports can only be placed at the top, and it would be too early,
 // since i18next is not yet initialized at that point.
 require("./BuiltinLanguages");
-
 export default i18next;
