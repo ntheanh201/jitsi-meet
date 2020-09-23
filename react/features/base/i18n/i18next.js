@@ -4,7 +4,7 @@ import COUNTRIES_RESOURCES from "i18n-iso-countries/langs/de.json";
 import i18next from "i18next";
 import I18nextXHRBackend from "i18next-xhr-backend";
 
-import LANGUAGES_RESOURCES from "../../../../lang/languages-de.json";
+import LANGUAGES_RESOURCES from "../../../../lang/languages.json";
 import MAIN_RESOURCES from "../../../../lang/main.json";
 
 import languageDetector from "./languageDetector";
@@ -26,7 +26,7 @@ export const LANGUAGES: Array<string> = Object.keys(LANGUAGES_RESOURCES);
  * @public
  * @type {string} The default language.
  */
-export const DEFAULT_LANGUAGE = LANGUAGES[0];
+export const DEFAULT_LANGUAGE = LANGUAGES[7];
 
 /**
  * The options to initialize i18next with.
