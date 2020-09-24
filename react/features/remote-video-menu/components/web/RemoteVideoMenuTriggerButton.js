@@ -1,11 +1,14 @@
 // @flow
 
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import { Icon, IconMenuThumb } from '../../../base/icons';
-import { getLocalParticipant, PARTICIPANT_ROLE } from '../../../base/participants';
-import { Popover } from '../../../base/popover';
-import { connect } from '../../../base/redux';
+import { Icon, IconMenuThumb } from "../../../base/icons";
+import {
+    getLocalParticipant,
+    PARTICIPANT_ROLE,
+} from "../../../base/participants";
+import { Popover } from "../../../base/popover";
+import { connect } from "../../../base/redux";
 
 import {
     GrantModeratorButton,
@@ -15,8 +18,8 @@ import {
     PrivateMessageMenuButton,
     RemoteControlButton,
     RemoteVideoMenu,
-    VolumeSlider
-} from './';
+    VolumeSlider,
+} from "./";
 
 declare var $: Object;
 declare var interfaceConfig: Object;
@@ -26,7 +29,6 @@ declare var interfaceConfig: Object;
  * {@link RemoteVideoMenuTriggerButton}.
  */
 type Props = {
-
     /**
      * Whether or not to display the kick button.
      */
@@ -85,7 +87,7 @@ type Props = {
     /**
      * The current state of the participant's remote control session.
      */
-    remoteControlState: number
+    remoteControlState: number,
 };
 
 /**
@@ -133,15 +135,16 @@ class RemoteVideoMenuTriggerButton extends Component<Props> {
 
         return (
             <Popover
-                content = { content }
-                onPopoverOpen = { this._onShowRemoteMenu }
-                position = { this.props.menuPosition }>
-                <span
-                    className = 'popover-trigger remote-video-menu-trigger'>
+                content={content}
+                onPopoverOpen={this._onShowRemoteMenu}
+                position={this.props.menuPosition}
+            >
+                <span className="popover-trigger remote-video-menu-trigger">
                     <Icon
-                        size = '1em'
-                        src = { IconMenuThumb }
-                        title = 'Remote user controls' />
+                        size="1em"
+                        src={IconMenuThumb}
+                        title="Remote user controls"
+                    />
                 </span>
             </Popover>
         );
@@ -176,7 +179,7 @@ class RemoteVideoMenuTriggerButton extends Component<Props> {
             onRemoteControlToggle,
             onVolumeChange,
             remoteControlState,
-            participantID
+            participantID,
         } = this.props;
 
         const buttons = [];
@@ -185,28 +188,27 @@ class RemoteVideoMenuTriggerButton extends Component<Props> {
             if (!_disableRemoteMute) {
                 buttons.push(
                     <MuteButton
-                        isAudioMuted = { isAudioMuted }
-                        key = 'mute'
-                        participantID = { participantID } />
+                        isAudioMuted={isAudioMuted}
+                        key="mute"
+                        participantID={participantID}
+                    />
                 );
-                buttons.push(
-                    <MuteEveryoneElseButton
-                        key = 'mute-others'
-                        participantID = { participantID } />
-                );
+                // buttons.push(
+                //     <MuteEveryoneElseButton
+                //         key = 'mute-others'
+                //         participantID = { participantID } />
+                // );
             }
 
-            buttons.push(
-                <GrantModeratorButton
-                    key = 'grant-moderator'
-                    participantID = { participantID } />
-            );
+            // buttons.push(
+            //     <GrantModeratorButton
+            //         key = 'grant-moderator'
+            //         participantID = { participantID } />
+            // );
 
             if (!_disableKick) {
                 buttons.push(
-                    <KickButton
-                        key = 'kick'
-                        participantID = { participantID } />
+                    <KickButton key="kick" participantID={participantID} />
                 );
             }
         }
@@ -214,33 +216,34 @@ class RemoteVideoMenuTriggerButton extends Component<Props> {
         if (remoteControlState) {
             buttons.push(
                 <RemoteControlButton
-                    key = 'remote-control'
-                    onClick = { onRemoteControlToggle }
-                    participantID = { participantID }
-                    remoteControlState = { remoteControlState } />
+                    key="remote-control"
+                    onClick={onRemoteControlToggle}
+                    participantID={participantID}
+                    remoteControlState={remoteControlState}
+                />
             );
         }
 
         buttons.push(
             <PrivateMessageMenuButton
-                key = 'privateMessage'
-                participantID = { participantID } />
+                key="privateMessage"
+                participantID={participantID}
+            />
         );
 
         if (onVolumeChange) {
             buttons.push(
                 <VolumeSlider
-                    initialValue = { initialVolumeValue }
-                    key = 'volume-slider'
-                    onChange = { onVolumeChange } />
+                    initialValue={initialVolumeValue}
+                    key="volume-slider"
+                    onChange={onVolumeChange}
+                />
             );
         }
 
         if (buttons.length > 0) {
             return (
-                <RemoteVideoMenu id = { participantID }>
-                    { buttons }
-                </RemoteVideoMenu>
+                <RemoteVideoMenu id={participantID}>{buttons}</RemoteVideoMenu>
             );
         }
 
@@ -260,13 +263,15 @@ class RemoteVideoMenuTriggerButton extends Component<Props> {
  */
 function _mapStateToProps(state) {
     const participant = getLocalParticipant(state);
-    const { remoteVideoMenu = {}, disableRemoteMute } = state['features/base/config'];
+    const { remoteVideoMenu = {}, disableRemoteMute } = state[
+        "features/base/config"
+    ];
     const { disableKick } = remoteVideoMenu;
 
     return {
         _isModerator: Boolean(participant?.role === PARTICIPANT_ROLE.MODERATOR),
         _disableKick: Boolean(disableKick),
-        _disableRemoteMute: Boolean(disableRemoteMute)
+        _disableRemoteMute: Boolean(disableRemoteMute),
     };
 }
 

@@ -1107,17 +1107,17 @@ class Toolbox extends Component<Props, State> {
                 showLabel={true}
                 visible={this._shouldShowButton("mute-everyone")}
             />,
-            this._shouldShowButton("stats") && (
-                <OverflowMenuItem
-                    accessibilityLabel={t(
-                        "toolbar.accessibilityLabel.speakerStats"
-                    )}
-                    icon={IconPresentation}
-                    key="stats"
-                    onClick={this._onToolbarOpenSpeakerStats}
-                    text={t("toolbar.speakerStats")}
-                />
-            ),
+            // this._shouldShowButton("stats") && (
+            //     <OverflowMenuItem
+            //         accessibilityLabel={t(
+            //             "toolbar.accessibilityLabel.speakerStats"
+            //         )}
+            //         icon={IconPresentation}
+            //         key="stats"
+            //         onClick={this._onToolbarOpenSpeakerStats}
+            //         text={t("toolbar.speakerStats")}
+            //     />
+            // ),
             // this._shouldShowButton('embedmeeting')
             //     && <OverflowMenuItem
             //         accessibilityLabel = { t('toolbar.accessibilityLabel.embedMeeting') }

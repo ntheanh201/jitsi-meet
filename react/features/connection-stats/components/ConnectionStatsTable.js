@@ -135,14 +135,16 @@ class ConnectionStatsTable extends Component<Props> {
     render() {
         const { isLocalVideo } = this.props;
 
-        return (
-            <div className = 'connection-info'>
-                { this._renderStatistics() }
-                { isLocalVideo ? this._renderShowMoreLink() : null }
-                { isLocalVideo && this.props.shouldShowMore
-                    ? this._renderAdditionalStats() : null }
-            </div>
-        );
+        // return (
+        //     <div className = 'connection-info'>
+        //         { this._renderStatistics() }
+        //         { isLocalVideo ? this._renderShowMoreLink() : null }
+        //         { isLocalVideo && this.props.shouldShowMore
+        //             ? this._renderAdditionalStats() : null }
+        //     </div>
+        // );
+
+        return null;
     }
 
     /**
